@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * In memory implementation of {@link SessionRepository}.
+ */
 public class MemorySessionRepository implements SessionRepository {
   private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
 
