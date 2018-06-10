@@ -30,6 +30,7 @@ public class GameServerApplication implements Application {
       HttpServer httpServer = HttpServer.create();
       httpServer.bind(new InetSocketAddress(8080), 500);
       httpServer.createContext("/", new RootHttpContextHandler());
+      httpServer.setExecutor(scheduler);
       httpServer.start();
     } catch (IOException e) {
       e.printStackTrace();
