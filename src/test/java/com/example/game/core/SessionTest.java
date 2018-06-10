@@ -14,19 +14,19 @@ public class SessionTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void createForShouldThrowForEmptyUserId() {
-    Session.createFor("", LocalDateTime.now());
+    Session.createFor(-10, LocalDateTime.now());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void createForShouldThrowForNullNow() {
-    Session.createFor("user", null);
+    Session.createFor(10, null);
   }
 
   @Test
   public void createForShouldCreateCorrectSession() {
-    Session actual = Session.createFor("user", LocalDateTime.of(2018, 6, 8, 21, 0));
+    Session actual = Session.createFor(10, LocalDateTime.of(2018, 6, 8, 21, 0));
 
-    assertEquals("user", actual.getUserId());
+    assertEquals(new Integer(10), actual.getUserId());
     assertEquals(LocalDateTime.of(2018, 6, 8, 21, 10), actual.getExpiryDate());
   }
 }

@@ -19,7 +19,7 @@ public class SessionServiceImpl implements SessionService {
   }
 
   @Override
-  public UUID login(String userId) {
+  public UUID login(Integer userId) {
     LocalDateTime now = LocalDateTime.now();
     Session session = Session.createFor(userId, now);
 

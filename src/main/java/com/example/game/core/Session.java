@@ -9,11 +9,11 @@ import java.util.UUID;
 public class Session implements Entity<UUID> {
   public static final int TEN = 10;
   private final UUID id;
-  private final String userId;
+  private final Integer userId;
   private final LocalDateTime expiryDate;
 
   // package private for testing purposes
-  Session(UUID id, String userId, LocalDateTime expiryDate) {
+  Session(UUID id, Integer userId, LocalDateTime expiryDate) {
     this.id = id;
     this.userId = userId;
     this.expiryDate = expiryDate;
@@ -27,8 +27,8 @@ public class Session implements Entity<UUID> {
    * @param now    time of session creation
    * @return session
    */
-  public static Session createFor(String userId, LocalDateTime now) {
-    if (userId == null || userId.isEmpty()) throw new IllegalArgumentException("userId cannot be null or empty");
+  public static Session createFor(Integer userId, LocalDateTime now) {
+    if (userId == null || userId.compareTo(0) < 0) throw new IllegalArgumentException("userId cannot be null or less than 0");
     if (now == null) throw new IllegalArgumentException("now cannot be null");
 
     return new Session(UUID.randomUUID(), userId, now.plusMinutes(TEN));
@@ -39,7 +39,7 @@ public class Session implements Entity<UUID> {
     return id;
   }
 
-  public String getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 

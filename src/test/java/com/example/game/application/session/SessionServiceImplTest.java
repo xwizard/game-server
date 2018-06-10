@@ -31,19 +31,19 @@ public class SessionServiceImplTest {
 
   @Test
   public void loginShouldReturnSessionId() {
-    UUID actual = service.login("user");
+    UUID actual = service.login(10);
     assertNotNull(actual);
   }
 
   @Test
   public void loginShouldscheduleExpiry() {
-    service.login("user");
+    service.login(10);
     verify(scheduler).schedule(any(Runnable.class), eq(10L), eq(TimeUnit.MINUTES));
   }
 
   @Test
   public void loginShouldSaveSession() {
-    service.login("user");
+    service.login(10);
     verify(sessionRepository).save(any(Session.class));
   }
 }
