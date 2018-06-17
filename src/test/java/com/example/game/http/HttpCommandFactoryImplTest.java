@@ -18,7 +18,25 @@ public class HttpCommandFactoryImplTest {
 
   @Test
   public void createShouldCreateLoginCommand() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/login"));
     assertEquals(LoginHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  public void createShouldCreateInvalidCommand() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/3/wrong?sessionkey=UICSNDK"));
+    assertEquals(InvalidHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  public void createShouldCreateInvalidCommandWhenCommandIsMissing() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/1?sessionkey=UICSNDK"));
+    assertEquals(InvalidHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  public void createShouldCreateInvalidCommandWhenIdIsMissing() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081?sessionkey=UICSNDK"));
+    assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 }

@@ -20,6 +20,11 @@ public class LoginCommandResult implements CommandResult {
   }
 
   @Override
+  public int httpStatus() {
+    return 200;
+  }
+
+  @Override
   public String toString() {
     return sessionId.toString();
   }

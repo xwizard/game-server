@@ -13,6 +13,23 @@ public class InvalidHttpCommand implements HttpCommand {
 
   @Override
   public CommandResult execute() {
-    return null;
+    return new CommandResult() {
+      @Override
+      public String toResponse() {
+        return message;
+      }
+
+      @Override
+      public int httpStatus() {
+        return 400;
+      }
+    };
+  }
+
+  @Override
+  public String toString() {
+    return "InvalidHttpCommand{" +
+        "message='" + message + '\'' +
+        '}';
   }
 }

@@ -8,8 +8,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class SessionServiceImpl implements SessionService {
+
+  private final static Logger LOG = Logger.getLogger(SessionServiceImpl.class.getCanonicalName());
+
   private final SessionRepository sessionRepository;
   private final ScheduledExecutorService scheduler;
 
@@ -24,7 +28,9 @@ public class SessionServiceImpl implements SessionService {
     Session session = Session.createFor(userId, now);
 
     sessionRepository.save(session);
-    scheduler.schedule(new ExpireSessionTask(), ChronoUnit.MINUTES.between(now, session.getExpiryDate()), TimeUnit.MINUTES);
+    scheduler.schedule(new ExpireSessionTask(sessionRepository, session.getId()), ChronoUnit.MINUTES.between(now, session.getExpiryDate()), TimeUnit.MINUTES);
+
+    LOG.fine("Session: " + session.getId() + " has been created for user: " + session.getUserId());
 
     return session.getId();
   }

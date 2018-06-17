@@ -34,4 +34,11 @@ public class LoginHttpCommand implements HttpCommand {
     return LoginCommandResult.of(sessionId
     );
   }
+
+  @Override
+  public String toString() {
+    return "LoginHttpCommand{" +
+        "userId=" + userId +
+        '}';
+  }
 }

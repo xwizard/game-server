@@ -9,4 +9,10 @@ public interface CommandResult {
    * @return string with body
    */
   String toResponse();
+
+  /**
+   * Returns HTTP status code.
+   * @return http status code
+   */
+  int httpStatus();
 }
