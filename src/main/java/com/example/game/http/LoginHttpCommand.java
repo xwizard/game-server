@@ -1,15 +1,13 @@
 package com.example.game.http;
 
-import java.net.URI;
-
 public class LoginHttpCommand implements HttpCommand {
-  @Override
-  public URI getURI() {
-    return null;
+  private final Integer userId;
+
+  private LoginHttpCommand(Integer userId, HttpMethod method) {
+    this.userId = userId;
   }
 
-  @Override
-  public HttpMethod getMethod() {
-    return null;
+  public static HttpCommand of(Integer userId, HttpMethod method) {
+    return new LoginHttpCommand(userId, method);
   }
 }
