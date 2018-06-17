@@ -27,9 +27,26 @@ public class HttpCommandFactoryImpl implements HttpCommandFactory {
         return LoginHttpCommand.of(applicationContext.sessionService(), uriWrapper.getId().get(), HttpMethod.GET);
       case "quit":
         return QuitHttpCommand.of(applicationContext.application());
+      case "score":
+        return createPostCommand(uriWrapper, exchange);
       default:
         return InvalidHttpCommand.of("Invalid request: " + exchange.getRequestURI());
     }
 
+  }
+
+  private HttpCommand createPostCommand(URIWrapper uriWrapper, HttpExchange exchange) {
+    if (!uriWrapper.getSessionId().isPresent()) {
+      return InvalidHttpCommand.of("Session id is missing in request: " + exchange.getRequestURI());
+    }
+
+
+
+    HttpMethod method = HttpMethod.parse(exchange.getRequestMethod());
+    if (method == HttpMethod.POST) {
+      return PostScoreHttpCommand.of(uriWrapper.getId().get(), uriWrapper.getSessionId().get(), Integer.valueOf(100));
+    }
+
+    return InvalidHttpCommand.of("score only supports POST and GET methods");
   }
 }

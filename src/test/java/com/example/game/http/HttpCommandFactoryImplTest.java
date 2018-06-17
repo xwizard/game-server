@@ -2,6 +2,7 @@ package com.example.game.http;
 
 import com.example.game.application.ApplicationContext;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -44,5 +45,12 @@ public class HttpCommandFactoryImplTest {
   public void createShouldCreateInvalidCommandWhenIdIsMissing() {
     HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081?sessionkey=UICSNDK"));
     assertEquals(InvalidHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  @Ignore
+  public void createShouldCreatePostScoreCommand() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK"));
+    assertEquals(PostScoreHttpCommand.class, actual.getClass());
   }
 }

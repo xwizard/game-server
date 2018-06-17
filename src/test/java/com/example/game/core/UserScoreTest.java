@@ -20,4 +20,15 @@ public class UserScoreTest {
     UserScore actual = UserScore.create(10);
     assertEquals(Integer.valueOf(10), actual.getId());
   }
+
+  @Test
+  public void addLevelScoreShouldAddUserScore() {
+    UserScore userScore = UserScore.create(10);
+    LevelScore levelScore = LevelScore.of(1, 1);
+
+    userScore.addScore(levelScore);
+
+    LevelScore actual = userScore.getUserSores().get(0);
+    assertEquals(levelScore, actual);
+  }
 }

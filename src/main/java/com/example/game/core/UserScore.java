@@ -40,6 +40,11 @@ public class UserScore implements Entity<Integer> {
     return Objects.equals(userId, userScore.userId);
   }
 
+  // Only for testing
+  List<LevelScore> getUserSores() {
+    return userSores;
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(userId);
