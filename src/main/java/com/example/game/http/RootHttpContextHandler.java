@@ -25,7 +25,12 @@ public class RootHttpContextHandler implements HttpHandler {
 
     LOG.fine("Handling command: " + command.toString());
 
-    CommandResult result = command.execute();
+    CommandResult result;
+    try {
+      result = command.execute();
+    } catch (RuntimeException e) {
+      result = ApplicationErrorResult.of(e);
+    }
     String responseBody = result.toResponse();
 
     httpExchange.getResponseHeaders().put("Content-Type", Collections.singletonList("text/plain; charset=utf-8"));
