@@ -2,7 +2,6 @@ package com.example.game.http;
 
 import com.example.game.application.ApplicationContext;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -48,9 +47,8 @@ public class HttpCommandFactoryImplTest {
   }
 
   @Test
-  @Ignore
   public void createShouldCreatePostScoreCommand() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK", "POST"));
     assertEquals(PostScoreHttpCommand.class, actual.getClass());
   }
 }

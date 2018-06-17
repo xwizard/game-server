@@ -5,9 +5,9 @@ import com.example.game.application.session.SessionId;
 public class PostScoreHttpCommand implements HttpCommand {
 
   private final Integer levelId;
-  private final String sessionId;
+  private final SessionId sessionId;
 
-  private PostScoreHttpCommand(String sessionId, Integer levelId, Integer score) {
+  private PostScoreHttpCommand(Integer levelId, SessionId sessionId, Integer score) {
     this.levelId = levelId;
     this.score = score;
     this.sessionId = sessionId;
@@ -16,7 +16,7 @@ public class PostScoreHttpCommand implements HttpCommand {
   private final Integer score;
 
   public static HttpCommand of(Integer levelId, SessionId sessionId, Integer score) {
-    return null;
+    return new PostScoreHttpCommand(levelId, sessionId, score);
   }
 
 

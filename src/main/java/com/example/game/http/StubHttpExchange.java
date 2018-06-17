@@ -15,17 +15,23 @@ import java.net.URISyntaxException;
 class StubHttpExchange extends HttpExchange {
 
   private final URI uri;
+  private final String method;
 
-  private StubHttpExchange(URI uri) {
+  private StubHttpExchange(URI uri, String method) {
     this.uri = uri;
+    this.method = method;
   }
 
-  public static StubHttpExchange of(String uri) {
+  public static StubHttpExchange of(String uri, String method) {
     try {
-      return new StubHttpExchange(new URI(uri));
+      return new StubHttpExchange(new URI(uri), method);
     } catch (URISyntaxException e) {
       throw new IllegalArgumentException(e);
     }
+  }
+
+  public static StubHttpExchange of(String uri) {
+    return of(uri, null);
   }
 
   @Override
@@ -45,7 +51,7 @@ class StubHttpExchange extends HttpExchange {
 
   @Override
   public String getRequestMethod() {
-    return null;
+    return method;
   }
 
   @Override
