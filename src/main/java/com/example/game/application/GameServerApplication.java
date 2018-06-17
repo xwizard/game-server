@@ -1,9 +1,5 @@
 package com.example.game.application;
 
-import com.example.game.application.session.SessionService;
-import com.example.game.application.session.SessionServiceImpl;
-import com.example.game.core.repository.MemorySessionRepository;
-import com.example.game.core.repository.SessionRepository;
 import com.example.game.http.HttpCommandFactory;
 import com.example.game.http.HttpCommandFactoryImpl;
 import com.example.game.http.RootHttpContextHandler;
@@ -13,36 +9,30 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Game server application.
  * All wiring comes here :(
  */
 public class GameServerApplication implements Application {
-  private ScheduledExecutorService scheduler;
-  private SessionRepository sessionRepository;
-  private SessionService sessionService;
-  private HttpCommandFactory httpCommandFactory;
-  private HttpHandler httpHandler;
 
-  private ApplicationContext applicationContext;
+  private HttpServer httpServer;
+  private ScheduledExecutorService executor;
 
   @Override
   public void run() {
-    scheduler = new ScheduledThreadPoolExecutor(50);
-    sessionRepository = new MemorySessionRepository();
-    sessionService = new SessionServiceImpl(sessionRepository, scheduler);
 
-    applicationContext = new GameServerApplicationContext(sessionService);
-    httpCommandFactory = new HttpCommandFactoryImpl(applicationContext);
-    httpHandler = new RootHttpContextHandler(httpCommandFactory);
+
+    ApplicationContext applicationContext = new GameServerApplicationContext(this);
+    this.executor = applicationContext.executor();
+    HttpCommandFactory httpCommandFactory = new HttpCommandFactoryImpl(applicationContext);
+    HttpHandler httpHandler = new RootHttpContextHandler(httpCommandFactory);
 
     try {
-      HttpServer httpServer = HttpServer.create();
+      httpServer = HttpServer.create();
       httpServer.bind(new InetSocketAddress(8080), 500);
       httpServer.createContext("/", httpHandler);
-      httpServer.setExecutor(scheduler);
+      httpServer.setExecutor(applicationContext.executor());
       httpServer.start();
     } catch (IOException e) {
       e.printStackTrace();
@@ -53,6 +43,7 @@ public class GameServerApplication implements Application {
 
   @Override
   public void shutdown() {
-    scheduler.shutdown();
+    httpServer.stop(10);
+    executor.shutdown();
   }
 }
