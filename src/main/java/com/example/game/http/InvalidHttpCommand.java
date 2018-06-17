@@ -10,4 +10,9 @@ public class InvalidHttpCommand implements HttpCommand {
   public static HttpCommand of(String message) {
     return new InvalidHttpCommand(message);
   }
+
+  @Override
+  public CommandResult execute() {
+    return null;
+  }
 }
