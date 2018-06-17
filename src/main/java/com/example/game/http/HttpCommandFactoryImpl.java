@@ -25,6 +25,8 @@ public class HttpCommandFactoryImpl implements HttpCommandFactory {
     switch (uriWrapper.getCommand().get()) {
       case "login":
         return LoginHttpCommand.of(applicationContext.sessionService(), uriWrapper.getId().get(), HttpMethod.GET);
+      case "quit":
+        return QuitHttpCommand.of(applicationContext.application());
       default:
         return InvalidHttpCommand.of("Invalid request: " + exchange.getRequestURI());
     }

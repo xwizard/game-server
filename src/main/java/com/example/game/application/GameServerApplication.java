@@ -9,6 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Logger;
 
 /**
  * Game server application.
@@ -16,13 +17,14 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class GameServerApplication implements Application {
 
+  private final static Logger LOG = Logger.getLogger(GameServerApplication.class.getCanonicalName());
+
   private HttpServer httpServer;
   private ScheduledExecutorService executor;
 
   @Override
   public void run() {
-
-
+    LOG.info("Starting game server…");
     ApplicationContext applicationContext = new GameServerApplicationContext(this);
     this.executor = applicationContext.executor();
     HttpCommandFactory httpCommandFactory = new HttpCommandFactoryImpl(applicationContext);
@@ -39,11 +41,14 @@ public class GameServerApplication implements Application {
       shutdown();
       System.exit(1);
     }
+    LOG.info("Game server started.");
   }
 
   @Override
   public void shutdown() {
-    httpServer.stop(10);
-    executor.shutdown();
+    LOG.info("Shutting down…");
+    httpServer.stop(1);
+    executor.shutdownNow();
+    LOG.info("Shutdown complete.");
   }
 }

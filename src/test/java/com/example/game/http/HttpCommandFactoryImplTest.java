@@ -23,6 +23,12 @@ public class HttpCommandFactoryImplTest {
   }
 
   @Test
+  public void createShouldCreateQuitCommand() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/quit"));
+    assertEquals(QuitHttpCommand.class, actual.getClass());
+  }
+
+  @Test
   public void createShouldCreateInvalidCommand() {
     HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/3/wrong?sessionkey=UICSNDK"));
     assertEquals(InvalidHttpCommand.class, actual.getClass());
