@@ -16,7 +16,7 @@ public class HttpCommandFactoryImpl implements HttpCommandFactory {
     URIWrapper uriWrapper = URIWrapper.of(exchange.getRequestURI());
 
     if (!uriWrapper.getId().isPresent()) {
-      return InvalidHttpCommand.of("Id is missing in request: " + exchange.getRequestURI());
+      return InvalidHttpCommand.of("Id is invalid in request: " + exchange.getRequestURI());
     }
     if (!uriWrapper.getCommand().isPresent()) {
       return InvalidHttpCommand.of("Command is missing in request: " + exchange.getRequestURI());
@@ -37,7 +37,7 @@ public class HttpCommandFactoryImpl implements HttpCommandFactory {
 
   private HttpCommand createPostCommand(URIWrapper uriWrapper, HttpExchange exchange) {
     if (!uriWrapper.getSessionId().isPresent()) {
-      return InvalidHttpCommand.of("Session id is missing in request: " + exchange.getRequestURI());
+      return InvalidHttpCommand.of("Session id is invalid in request: " + exchange.getRequestURI());
     }
 
 

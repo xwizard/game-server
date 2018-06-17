@@ -1,5 +1,7 @@
 package com.example.game.http;
 
+import com.example.game.application.session.SessionId;
+
 public class PostScoreHttpCommand implements HttpCommand {
 
   private final Integer levelId;
@@ -13,7 +15,7 @@ public class PostScoreHttpCommand implements HttpCommand {
 
   private final Integer score;
 
-  public static HttpCommand of(String sessionId, String levelId, Integer score) {
+  public static HttpCommand of(Integer levelId, SessionId sessionId, Integer score) {
     return null;
   }
 

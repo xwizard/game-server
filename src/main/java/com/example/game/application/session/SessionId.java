@@ -26,6 +26,15 @@ public class SessionId {
     return new SessionId(randomId.toString());
   }
 
+  public static SessionId of(String string) {
+    if (string == null || string.length() != 7) throw new IllegalArgumentException("Session id has to be exactly 7 characters");
+    for (char c : string.toCharArray()) {
+      if (c < 'A' || c > 'Z') throw new IllegalArgumentException("Session id can contain only A-Z characters");
+    }
+
+    return new SessionId(string);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

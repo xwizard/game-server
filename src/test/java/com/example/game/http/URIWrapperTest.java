@@ -1,5 +1,6 @@
 package com.example.game.http;
 
+import com.example.game.application.session.SessionId;
 import org.junit.Test;
 
 import java.net.URI;
@@ -31,13 +32,13 @@ private final static URI INCORRECT_URI;
   @Test
   public void ofShoulParseSessionId() {
     URIWrapper actual = URIWrapper.of(TEST_URI);
-    assertEquals("UICSNDK", actual.getSessionId().get());
+    assertEquals(SessionId.of("UICSNDK"), actual.getSessionId().get());
   }
 
   @Test
   public void ofShoulParseId() {
     URIWrapper actual = URIWrapper.of(TEST_URI);
-    assertEquals("2", actual.getId().get());
+    assertEquals(Integer.valueOf(2), actual.getId().get());
   }
 
   @Test

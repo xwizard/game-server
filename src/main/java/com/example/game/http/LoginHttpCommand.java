@@ -4,7 +4,6 @@ import com.example.game.application.session.SessionId;
 import com.example.game.application.session.SessionService;
 
 
-
 public class LoginHttpCommand implements HttpCommand {
   private final Integer userId;
   private final SessionService sessionService;
@@ -14,15 +13,14 @@ public class LoginHttpCommand implements HttpCommand {
     this.sessionService = sessionService;
   }
 
-  public static HttpCommand of(SessionService sessionService, String unparsedUserId, HttpMethod method) {
+  public static HttpCommand of(SessionService sessionService, Integer userId, HttpMethod method) {
     if (method != HttpMethod.GET) return InvalidHttpCommand.of("Only GET is allowed for login");
 
-    try {
-      Integer userId = Integer.parseInt(unparsedUserId);
-      return new LoginHttpCommand(sessionService, userId);
-    } catch (NumberFormatException e) {
-      return InvalidHttpCommand.of(String.format("Invalid user id: %s", unparsedUserId));
+    if (userId < 0) {
+      return InvalidHttpCommand.of(String.format("Invalid user id: %d", userId));
     }
+
+    return new LoginHttpCommand(sessionService, userId);
   }
 
   public Integer getUserId() {

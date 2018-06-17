@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -45,5 +46,31 @@ public class SessionIdTest {
         assertTrue("Character not in A-Z range", c >= 'A' && c <= 'Z');
       }
     });
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ofShouldThrowOnNull() {
+    SessionId.of(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ofShouldThrowOnLengthLessThan7() {
+    SessionId.of("QWERTY");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ofShouldThrowOnLengthGreaterThan7() {
+    SessionId.of("QWERTYUI");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ofShouldThrowOnInvalidCharacters() {
+    SessionId.of("1234567");
+  }
+
+  @Test
+  public void ofShouldCreateValidSessionId() {
+    SessionId actual = SessionId.of("QWERTYU");
+    assertEquals("QWERTYU", actual.toString());
   }
 }

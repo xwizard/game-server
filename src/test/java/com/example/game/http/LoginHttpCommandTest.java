@@ -24,19 +24,19 @@ public class LoginHttpCommandTest {
 
   @Test
   public void ofShouldReturnInvalidCommandForNonNumericalUserIds() {
-    HttpCommand actual = LoginHttpCommand.of(sessionService, "incorrect", HttpMethod.GET);
+    HttpCommand actual = LoginHttpCommand.of(sessionService, -1, HttpMethod.GET);
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void ofShouldReturnInvalidCommandForPOST() {
-    HttpCommand actual = LoginHttpCommand.of(sessionService, "123", HttpMethod.POST);
+    HttpCommand actual = LoginHttpCommand.of(sessionService, 123, HttpMethod.POST);
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void ofShouldReturnInvalidCommandForUNKNOWN() {
-    HttpCommand actual = LoginHttpCommand.of(sessionService, "123", HttpMethod.UNKNOWN);
+    HttpCommand actual = LoginHttpCommand.of(sessionService, 123, HttpMethod.UNKNOWN);
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
@@ -56,6 +56,6 @@ public class LoginHttpCommandTest {
   }
 
   private HttpCommand command() {
-    return LoginHttpCommand.of(sessionService, "123", HttpMethod.GET);
+    return LoginHttpCommand.of(sessionService, 123, HttpMethod.GET);
   }
 }
