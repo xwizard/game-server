@@ -4,7 +4,6 @@ import com.example.game.core.Session;
 import com.example.game.core.repository.SessionRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 public class ExpireSessionTask implements Runnable {
@@ -12,9 +11,9 @@ public class ExpireSessionTask implements Runnable {
   private final static Logger LOG = Logger.getLogger(ExpireSessionTask.class.getCanonicalName());
 
   private final SessionRepository sessionRepository;
-  private final UUID sessionId;
+  private final SessionId sessionId;
 
-  public ExpireSessionTask(SessionRepository sessionRepository, UUID id) {
+  public ExpireSessionTask(SessionRepository sessionRepository, SessionId id) {
     this.sessionRepository = sessionRepository;
     this.sessionId = id;
   }

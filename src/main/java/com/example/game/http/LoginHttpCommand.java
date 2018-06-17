@@ -1,8 +1,9 @@
 package com.example.game.http;
 
+import com.example.game.application.session.SessionId;
 import com.example.game.application.session.SessionService;
 
-import java.util.UUID;
+
 
 public class LoginHttpCommand implements HttpCommand {
   private final Integer userId;
@@ -30,9 +31,8 @@ public class LoginHttpCommand implements HttpCommand {
 
   @Override
   public CommandResult execute() {
-    UUID sessionId = sessionService.login(userId);
-    return LoginCommandResult.of(sessionId
-    );
+    SessionId sessionId = sessionService.login(userId);
+    return LoginCommandResult.of(sessionId);
   }
 
   @Override

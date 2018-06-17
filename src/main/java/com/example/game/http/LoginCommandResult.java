@@ -1,16 +1,16 @@
 package com.example.game.http;
 
-import java.util.UUID;
+import com.example.game.application.session.SessionId;
 
 public class LoginCommandResult implements CommandResult {
 
-  private final UUID sessionId;
+  private final SessionId sessionId;
 
-  private LoginCommandResult(UUID sessionId) {
+  private LoginCommandResult(SessionId sessionId) {
     this.sessionId = sessionId;
   }
 
-  public static LoginCommandResult of(UUID sessionId) {
+  public static LoginCommandResult of(SessionId sessionId) {
     return new LoginCommandResult(sessionId);
   }
 
@@ -29,7 +29,7 @@ public class LoginCommandResult implements CommandResult {
     return sessionId.toString();
   }
 
-  public UUID getSessionId() {
+  public SessionId getSessionId() {
     return sessionId;
   }
 }

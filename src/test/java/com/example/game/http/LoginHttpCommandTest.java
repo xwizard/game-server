@@ -1,10 +1,9 @@
 package com.example.game.http;
 
+import com.example.game.application.session.SessionId;
 import com.example.game.application.session.SessionService;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -13,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 public class LoginHttpCommandTest {
 
-  private final static UUID SESSION_ID = UUID.randomUUID();
+  private final static SessionId SESSION_ID = SessionId.random();
 
   private SessionService sessionService;
 

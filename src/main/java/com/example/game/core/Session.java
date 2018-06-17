@@ -1,19 +1,19 @@
 package com.example.game.core;
 
+import com.example.game.application.session.SessionId;
 import com.example.game.core.repository.Entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Session implements Entity<UUID> {
-  public static final int TEN = 10;
-  private final UUID id;
+public class Session implements Entity<SessionId> {
+  private static final int TEN = 10;
+  private final SessionId id;
   private final Integer userId;
   private final LocalDateTime expiryDate;
 
   // package private for testing purposes
-  Session(UUID id, Integer userId, LocalDateTime expiryDate) {
+  private Session(SessionId id, Integer userId, LocalDateTime expiryDate) {
     this.id = id;
     this.userId = userId;
     this.expiryDate = expiryDate;
@@ -31,11 +31,11 @@ public class Session implements Entity<UUID> {
     if (userId == null || userId.compareTo(0) < 0) throw new IllegalArgumentException("userId cannot be null or less than 0");
     if (now == null) throw new IllegalArgumentException("now cannot be null");
 
-    return new Session(UUID.randomUUID(), userId, now.plusMinutes(TEN));
+    return new Session(SessionId.random(), userId, now.plusMinutes(TEN));
   }
 
   @Override
-  public UUID getId() {
+  public SessionId getId() {
     return id;
   }
 

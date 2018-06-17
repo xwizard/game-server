@@ -1,20 +1,20 @@
 package com.example.game.core.repository;
 
+import com.example.game.application.session.SessionId;
 import com.example.game.core.Session;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * In memory implementation of {@link SessionRepository}.
  */
 public class MemorySessionRepository implements SessionRepository {
-  private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
+  private final Map<SessionId, Session> sessions = new ConcurrentHashMap<>();
 
   @Override
-  public Optional<Session> get(UUID id) {
+  public Optional<Session> get(SessionId id) {
     return Optional.ofNullable(sessions.get(id));
   }
 
@@ -24,7 +24,7 @@ public class MemorySessionRepository implements SessionRepository {
   }
 
   @Override
-  public Optional<Session> remove(UUID id) {
+  public Optional<Session> remove(SessionId id) {
     return Optional.ofNullable(sessions.remove(id));
   }
 }

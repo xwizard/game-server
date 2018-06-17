@@ -6,5 +6,5 @@ import java.util.UUID;
  * Manages user sessions. Should be thread safe
  */
 public interface SessionService {
-  UUID login(Integer userId);
+  SessionId login(Integer userId);
 }

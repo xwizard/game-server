@@ -11,12 +11,10 @@ import static org.junit.Assert.assertTrue;
 public class SessionIdTest {
 
 
-  private final static int ENOUGH = 5_000;;
+  private final static int ENOUGH = 5_000;
 
   @Test
   public void randomIsRandomEnough() {
-
-
     List<SessionId> ids = randomIds();
 
     for (int i = 0; i < ENOUGH; i++) {

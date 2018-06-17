@@ -8,7 +8,7 @@ import com.example.game.core.repository.UserScoreRepository;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -28,7 +28,7 @@ public class SessionServiceImpl implements SessionService {
   }
 
   @Override
-  public UUID login(Integer userId) {
+  public SessionId login(Integer userId) {
     Optional<UserScore> userScore = userScoreRepository.get(userId);
     if (!userScore.isPresent()) {
       userScoreRepository.save(UserScore.create(userId));

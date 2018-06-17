@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.mockito.stubbing.Answer;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +38,7 @@ public class SessionServiceImplTest {
 
   @Test
   public void loginShouldReturnSessionId() {
-    UUID actual = service.login(10);
+    SessionId actual = service.login(10);
     assertNotNull(actual);
   }
 
