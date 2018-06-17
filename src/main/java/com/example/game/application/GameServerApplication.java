@@ -33,10 +33,10 @@ public class GameServerApplication implements Application {
     scheduler = new ScheduledThreadPoolExecutor(50);
     sessionRepository = new MemorySessionRepository();
     sessionService = new SessionServiceImpl(sessionRepository, scheduler);
-    httpHandler = new RootHttpContextHandler(httpCommandFactory);
 
     applicationContext = new GameServerApplicationContext(sessionService);
     httpCommandFactory = new HttpCommandFactoryImpl(applicationContext);
+    httpHandler = new RootHttpContextHandler(httpCommandFactory);
 
     try {
       HttpServer httpServer = HttpServer.create();
