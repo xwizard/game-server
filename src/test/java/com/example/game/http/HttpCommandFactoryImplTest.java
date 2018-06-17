@@ -21,6 +21,5 @@ public class HttpCommandFactoryImplTest {
     HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK"));
     assertTrue(actual instanceof LoginHttpCommand);
     LoginHttpCommand command = (LoginHttpCommand) actual;
-
   }
 }
