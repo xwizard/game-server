@@ -5,33 +5,45 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 
 class StubHttpExchange extends HttpExchange {
 
   private final URI uri;
   private final String method;
+  private final String body;
 
-  private StubHttpExchange(URI uri, String method) {
+  private StubHttpExchange(URI uri, String method, String body) {
     this.uri = uri;
     this.method = method;
+    this.body = body;
   }
 
-  public static StubHttpExchange of(String uri, String method) {
+  public static StubHttpExchange of(String uri, String method, String body) {
     try {
-      return new StubHttpExchange(new URI(uri), method);
+      return new StubHttpExchange(new URI(uri), method, body);
     } catch (URISyntaxException e) {
       throw new IllegalArgumentException(e);
     }
   }
 
-  public static StubHttpExchange of(String uri) {
-    return of(uri, null);
+  public static HttpExchange of(String uri, String method) {
+    return of(uri, method, "");
+  }
+
+  public static HttpExchange ofBody(String body) {
+    return of("http://example.com", null, body);
+  }
+
+  public static HttpExchange of(String uri) {
+    return of(uri, null, "");
   }
 
   @Override
@@ -66,7 +78,7 @@ class StubHttpExchange extends HttpExchange {
 
   @Override
   public InputStream getRequestBody() {
-    return null;
+    return new ByteArrayInputStream(body.getBytes(StandardCharsets.UTF_8));
   }
 
   @Override

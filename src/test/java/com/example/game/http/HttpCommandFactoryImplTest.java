@@ -47,8 +47,14 @@ public class HttpCommandFactoryImplTest {
   }
 
   @Test
-  public void createShouldCreatePostScoreCommand() {
+  public void createShouldCreateInvalidCommandForScoreMissing() {
     HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK", "POST"));
+    assertEquals(InvalidHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  public void createShouldCreatePostScoreCommand() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK", "POST", "123"));
     assertEquals(PostScoreHttpCommand.class, actual.getClass());
   }
 }

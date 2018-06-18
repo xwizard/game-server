@@ -4,6 +4,7 @@ import com.example.game.application.session.SessionId;
 import com.example.game.core.repository.Entity;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Session implements Entity<SessionId> {
@@ -45,6 +46,10 @@ public class Session implements Entity<SessionId> {
 
   public LocalDateTime getExpiryDate() {
     return expiryDate;
+  }
+
+  public boolean expired(LocalDateTime now) {
+    return ChronoUnit.MINUTES.between(now, getExpiryDate()) < 0;
   }
 
   @Override
