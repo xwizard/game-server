@@ -1,5 +1,7 @@
 package com.example.game.application;
 
+import com.example.game.application.score.PostUserScoreService;
+import com.example.game.application.score.PostUserScoreServiceImpl;
 import com.example.game.application.session.SessionService;
 import com.example.game.application.session.SessionServiceImpl;
 import com.example.game.application.session.SessionValidatorServiceImpl;
@@ -20,6 +22,7 @@ public class GameServerApplicationContext implements ApplicationContext {
   private ScheduledExecutorService executor;
   private SessionService sessionService;
   private SessionValidatorService sessionValidatorService;
+  private PostUserScoreService postUserScoreService;
   private Application application;
 
 
@@ -29,6 +32,7 @@ public class GameServerApplicationContext implements ApplicationContext {
 
     SessionRepository sessionRepository = new MemorySessionRepository();
     UserScoreRepository userScoreRepository = new MemoryUserScoreRepository();
+    postUserScoreService = new PostUserScoreServiceImpl(userScoreRepository);
     sessionService = new SessionServiceImpl(sessionRepository, userScoreRepository, executor);
     sessionValidatorService = new SessionValidatorServiceImpl(sessionRepository);
   }
@@ -51,5 +55,10 @@ public class GameServerApplicationContext implements ApplicationContext {
   @Override
   public SessionValidatorService sessionValidatorService() {
     return sessionValidatorService;
+  }
+
+  @Override
+  public PostUserScoreService postUserScoreService() {
+    return postUserScoreService;
   }
 }

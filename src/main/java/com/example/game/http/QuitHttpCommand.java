@@ -28,4 +28,9 @@ public class QuitHttpCommand implements HttpCommand {
       }
     };
   }
+
+  @Override
+  public String toString() {
+    return "QuitHttpCommand";
+  }
 }

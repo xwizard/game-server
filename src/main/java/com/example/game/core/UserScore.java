@@ -40,8 +40,7 @@ public class UserScore implements Entity<Integer> {
     return Objects.equals(userId, userScore.userId);
   }
 
-  // Only for testing
-  List<LevelScore> getUserSores() {
+  public List<LevelScore> getUserSores() {
     return userSores;
   }
 

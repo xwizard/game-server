@@ -1,5 +1,6 @@
 package com.example.game.application;
 
+import com.example.game.application.score.PostUserScoreService;
 import com.example.game.application.session.SessionService;
 import com.example.game.application.session.SessionValidatorService;
 
@@ -13,4 +14,5 @@ public interface ApplicationContext {
   ScheduledExecutorService executor();
   Application application();
   SessionValidatorService sessionValidatorService();
+  PostUserScoreService postUserScoreService();
 }

@@ -47,7 +47,7 @@ public class HttpCommandFactoryImpl implements HttpCommandFactory {
 
     HttpMethod method = HttpMethod.parse(exchange.getRequestMethod());
     if (method == HttpMethod.POST) {
-      return PostScoreHttpCommand.of(applicationContext.sessionValidatorService(), uriWrapper.getId().get(),
+      return PostScoreHttpCommand.of(applicationContext, uriWrapper.getId().get(),
           uriWrapper.getSessionId().get(), Integer.valueOf(100));
     }
 
