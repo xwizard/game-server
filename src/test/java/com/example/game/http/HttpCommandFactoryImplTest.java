@@ -18,31 +18,31 @@ public class HttpCommandFactoryImplTest {
 
   @Test
   public void createShouldCreateLoginCommand() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/login"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/login", "GET"));
     assertEquals(LoginHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void createShouldCreateQuitCommand() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/quit"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/quit", "GET"));
     assertEquals(QuitHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void createShouldCreateInvalidCommand() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/3/wrong?sessionkey=UICSNDK"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/3/wrong?sessionkey=UICSNDK", "GET"));
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void createShouldCreateInvalidCommandWhenCommandIsMissing() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/1?sessionkey=UICSNDK"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/1?sessionkey=UICSNDK", "GET"));
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
   @Test
   public void createShouldCreateInvalidCommandWhenIdIsMissing() {
-    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081?sessionkey=UICSNDK"));
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081?sessionkey=UICSNDK", "GET"));
     assertEquals(InvalidHttpCommand.class, actual.getClass());
   }
 
@@ -56,5 +56,11 @@ public class HttpCommandFactoryImplTest {
   public void createShouldCreatePostScoreCommand() {
     HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/score?sessionkey=UICSNDK", "POST", "123"));
     assertEquals(PostScoreHttpCommand.class, actual.getClass());
+  }
+
+  @Test
+  public void createShouldCreateListScoreCommand() {
+    HttpCommand actual = factory.create(StubHttpExchange.of("http://localhost:8081/2/highscorelist?sessionkey=UICSNDK", "GET"));
+    assertEquals(HighScoreHttpCommand.class, actual.getClass());
   }
 }

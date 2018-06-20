@@ -6,10 +6,7 @@ import com.example.game.application.session.SessionService;
 import com.example.game.application.session.SessionServiceImpl;
 import com.example.game.application.session.SessionValidatorServiceImpl;
 import com.example.game.application.session.SessionValidatorService;
-import com.example.game.core.repository.MemoryUserScoreRepository;
-import com.example.game.core.repository.MemorySessionRepository;
-import com.example.game.core.repository.SessionRepository;
-import com.example.game.core.repository.UserScoreRepository;
+import com.example.game.core.repository.*;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -23,16 +20,22 @@ public class GameServerApplicationContext implements ApplicationContext {
   private SessionService sessionService;
   private SessionValidatorService sessionValidatorService;
   private PostUserScoreService postUserScoreService;
+  private HighScoreListService highScoreListService;
   private Application application;
 
-
+  /**
+   * Implementation of game context.
+   * @param application application instance
+   */
   public GameServerApplicationContext(Application application) {
     this.application = application;
     executor = new ScheduledThreadPoolExecutor(50);
 
     SessionRepository sessionRepository = new MemorySessionRepository();
     UserScoreRepository userScoreRepository = new MemoryUserScoreRepository();
-    postUserScoreService = new PostUserScoreServiceImpl(userScoreRepository);
+    LevelHighScoreRepository levelHighScoreRepository = new MemoryLevelHighScoreRepository();
+    highScoreListService = new HighScoreListServiceImpl(levelHighScoreRepository);
+    postUserScoreService = new PostUserScoreServiceImpl(userScoreRepository, levelHighScoreRepository);
     sessionService = new SessionServiceImpl(sessionRepository, userScoreRepository, executor);
     sessionValidatorService = new SessionValidatorServiceImpl(sessionRepository);
   }
@@ -60,5 +63,10 @@ public class GameServerApplicationContext implements ApplicationContext {
   @Override
   public PostUserScoreService postUserScoreService() {
     return postUserScoreService;
+  }
+
+  @Override
+  public HighScoreListService highScoreListService() {
+    return highScoreListService;
   }
 }

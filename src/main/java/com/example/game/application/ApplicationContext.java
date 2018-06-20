@@ -15,4 +15,5 @@ public interface ApplicationContext {
   Application application();
   SessionValidatorService sessionValidatorService();
   PostUserScoreService postUserScoreService();
+  HighScoreListService highScoreListService();
 }

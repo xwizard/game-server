@@ -39,6 +39,6 @@ public class UserHighScore {
 
   @Override
   public String toString() {
-    return userId + "," + score;
+    return userId + "=" + score;
   }
 }

@@ -42,10 +42,6 @@ class StubHttpExchange extends HttpExchange {
     return of("http://example.com", null, body);
   }
 
-  public static HttpExchange of(String uri) {
-    return of(uri, null, "");
-  }
-
   @Override
   public Headers getRequestHeaders() {
     return null;
